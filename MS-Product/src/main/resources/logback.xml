@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="3 seconds">
+	<contextName>m-product-logger</contextName>
+	
+	<property scope="context" name="logger.type" value="auth-service"/>
+	<include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+	<jmxConfigurator/>
+	
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<!-- <pattern>
+				%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{32} - %msg%n
+			</pattern> -->
+			<pattern>%date ${HOSTNAME} %-5level %logger{36}:%L - %msg%n</pattern>
+		</encoder>
+	</appender>
+	<appender name="m-product-service" class="ch.qos.logback.core.rolling.RollingFileAppender">
+	  <file>${user.home}/logs/m-product-service.log</file>
+	  <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+	    <!-- rollover daily -->
+	    <fileNamePattern>${user.home}/logs/%d{yyyy-MM,aux}/m-product-service-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+	    <timeBasedFileNamingAndTriggeringPolicy
+		  class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+	      <!-- or whenever the file size reaches 10MB -->
+	      <maxFileSize>10MB</maxFileSize>
+	    </timeBasedFileNamingAndTriggeringPolicy>
+	    <maxHistory>30</maxHistory> 
+	  </rollingPolicy>
+	  <encoder>
+	    <pattern>%date ${HOSTNAME} %-5level %logger{36}:%L - %msg%n</pattern>
+	  </encoder>
+	</appender>
+	
+	<appender name="ASYNC_FILE" class="ch.qos.logback.classic.AsyncAppender">
+	  <appender-ref ref="m-product-service" />
+	</appender>
+
+	<jmxConfigurator />
+	<root level="INFO">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="ASYNC_FILE" />
+	</root>
+
+	<logger name="com.project.family" level="ALL" />
+</configuration>
