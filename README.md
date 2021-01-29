@@ -19,7 +19,7 @@ Spring boot microservices with Authentication and centralized log with ELK
 Import dump-app_db.sql to your MySQL
 
 ## Architecture
-[Architecture](asset/architecture.jpg)
+![Alt text](asset/architecture.jpg?raw=true "Architecture")
 
 Login to get bearer token from the authentication endpoint /auth/login . Then send a request to access the protected microservices.
 Zuul Service act like Gateway which does central authentication, redirect an incoming request to other microservices.
@@ -47,8 +47,6 @@ Collect and centralized logging in three open source project for analysis in var
 
 ## Zipkin
 Measure where service has spent more time.
-
-
 
 ## Sample Payload
 1. [Login request](asset/login.PNG)
