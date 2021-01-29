@@ -1,1 +1,60 @@
 # Microservices-Spring-Boot-ELK
+Spring boot microservices with Authentication and centralized log with ELK
+
+## Prerequisites
+1. Java 8
+2. JPA Mysql
+3. Mongo DB
+4. Spring Boot Actuator 
+5. Dev Tools 
+6. Lombok 
+7. Eureka
+8. Zuul
+9. Zipkin
+10. Sleuth
+11. JWT
+12. Elasticsearch-Logstash-Kibana
+
+## Setup MySQL
+Import dump-app_db.sql to your MySQL
+
+## Architecture
+[Architecture](asset/architecture.jpg)
+
+Login to get bearer token from the authentication endpoint /auth/login . Then send a request to access the protected microservices.
+Zuul Service act like Gateway which does central authentication, redirect an incoming request to other microservices.
+
+## Eureka Server
+Holds the information about all client-service applications.
+
+## Common Service
+Configure jwt variable
+
+## Authentication Service
+Validate user credential with phoneNumber or/and email and if validate then generate token, otherwise throw exception
+
+## User Service
+Create microservices that responsible to handle CRUD operation of user.
+
+## Product Service
+Create microservices that responsible to handle CRUD operation of product.
+
+## Zuul Service
+Create Gateway-Service (Zuul proxy) Application ,register it in Eureka server, validate token, and centralize authentication incoming request.
+
+## Elasticsearch-Logstash-Kibana
+Collect and centralized logging in three open source project for analysis in various environments, search indexes, visualize data with charts and graphs 
+
+## Zipkin
+Measure where service has spent more time.
+
+
+
+## Sample Payload
+1. [Login request](asset/login.PNG)
+2. [Register User](asset/register_user.PNG)
+3. [Update User](asset/update_user.PNG)
+4. [Get User By Id](asset/login.PNG)
+5. [Get Product By Id](asset/get_product_by_id.PNG)
+6. [Collect log by ELK](asset/elk_log.PNG)
+7. [Measure request with Zipkin](asset/zipkin_log.PNG)

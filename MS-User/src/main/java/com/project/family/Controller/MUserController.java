@@ -47,7 +47,7 @@ public class MUserController  {
 		
 		if (mUserEntity.isPresent()) {
 			BeanUtils.copyProperties(mUserEntity.get(), dto);
-			logger.info("data: {}",dto);
+			logger.info("data user: {}",dto);
 			return new ResponseEntity<> (dto, HttpStatus.OK);
 		}else {
 			logger.error("id not found: ",id);
