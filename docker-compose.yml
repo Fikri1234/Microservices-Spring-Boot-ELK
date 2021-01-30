@@ -1,0 +1,103 @@
+version: '3'
+
+services: 
+  db:
+    container_name: db
+    image: mysql:latest
+    command: --default-authentication-plugin=mysql_native_password
+    expose:
+      - '3306'
+    ports: 
+      - "3306:3306"
+    volumes: 
+      - D:/Project/Docker/MySQL:/var/lib/mysql
+    networks: 
+      - interact-spring-boot-services
+  eureka-service:
+    container_name: eureka-service
+    image: eureka-service
+    ports:
+      - "8760:8760"
+    networks:
+      - interact-spring-boot-services 
+    hostname: eureka-service  
+  commons-service:
+    container_name: commons-service
+    image: commons-service
+    ports:
+      - "7700:7700"
+    networks:
+      - interact-spring-boot-services  
+    links:
+      - eureka-service
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-service:8760/eureka  
+      - EUREKA_SERVER=eureka-service
+    depends_on:
+      - eureka-service
+  authentication-service:
+    container_name: authentication-service
+    image: authentication-service
+    ports:
+      - "7600:7600"
+    networks:
+      - interact-spring-boot-services  
+    links:
+      - eureka-service
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-service:8760/eureka  
+      - EUREKA_SERVER=eureka-service
+      - MYSQL_SERVER=db
+    depends_on:
+      - eureka-service
+      - commons-service
+  zuul-service:
+    container_name: zuul-service
+    image: zuul-service
+    ports:
+      - "7900:7900"
+    networks:
+      - interact-spring-boot-services  
+    links:
+      - eureka-service
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-service:8760/eureka  
+      - EUREKA_SERVER=eureka-service
+    depends_on:
+      - eureka-service
+  master-user-service:
+    container_name: master-user-service
+    image: master-user-service
+    ports:
+      - "7100:7100"
+    networks:
+      - interact-spring-boot-services  
+    links:
+      - eureka-service
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-service:8760/eureka  
+      - EUREKA_SERVER=eureka-service
+      - MYSQL_SERVER=db
+    depends_on:
+      - eureka-service 
+  master-product-service:
+    container_name: master-product-service
+    image: master-product-service
+    ports:
+      - "7300:7300"
+    networks:
+      - interact-spring-boot-services  
+    links:
+      - eureka-service
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-service:8760/eureka  
+      - EUREKA_SERVER=eureka-service
+      - MYSQL_SERVER=db
+    depends_on:
+      - eureka-service       
+networks: 
+  interact-spring-boot-services:
+    external: true
+    driver: "bridge"    
+
+## docker container run --network interact-spring-boot-services --name eureka-service -p 8760:8760 -d eureka-service    
