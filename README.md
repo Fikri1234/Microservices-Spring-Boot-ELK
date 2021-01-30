@@ -48,6 +48,54 @@ Collect and centralized logging in three open source project for analysis in var
 ## Zipkin
 Measure where service has spent more time.
 
+## Deployment Strategy with Docker
+
+### Interact container with each other using Docker Networking
+Create Docker Networking to allow multiple containers to communicate with each other.
+```
+docker network create interact-spring-boot-services
+```
+
+### Build image for each microservices
+**1. Eureka Service**
+```
+mvn clean install package -DskipTests
+docker image build -t eureka-service --rm=true .
+```
+
+**2. Common Service**
+```
+mvn clean install package -DskipTests
+docker image build -t commons-service --rm=true .
+```
+
+**3. Authentication Service**
+```
+mvn clean install package -DskipTests
+docker image build -t authentication-service --rm=true .
+```
+
+**4. User Service**
+```
+mvn clean install package -DskipTests
+docker image build -t master-user-service --rm=true .
+```
+
+**5. Product Service**
+```
+mvn clean install package -DskipTests
+docker image build -t master-product-service --rm=true .
+```
+
+**6. Zuul Service**
+```
+mvn clean install package -DskipTests
+docker image build -t zuul-service --rm=true .
+```
+
+### Create and run container using Docker Compose
+```docker-compose up --build```
+
 ## Sample Payload
 1. [Login request](asset/login.PNG)
 2. [Register User](asset/register_user.PNG)
