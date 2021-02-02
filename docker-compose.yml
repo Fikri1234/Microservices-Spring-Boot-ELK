@@ -17,7 +17,7 @@ services:
     container_name: eureka-service
     image: eureka-service
     ports:
-      - "8760:8760"
+      - "8761:8761"
     networks:
       - interact-spring-boot-services 
     hostname: eureka-service  
@@ -31,7 +31,7 @@ services:
     links:
       - eureka-service
     environment:
-      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-service:8760/eureka  
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-service:8761/eureka  
       - EUREKA_SERVER=eureka-service
     depends_on:
       - eureka-service
@@ -45,7 +45,7 @@ services:
     links:
       - eureka-service
     environment:
-      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-service:8760/eureka  
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-service:8761/eureka  
       - EUREKA_SERVER=eureka-service
       - MYSQL_SERVER=db
     depends_on:
@@ -61,7 +61,7 @@ services:
     links:
       - eureka-service
     environment:
-      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-service:8760/eureka  
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-service:8761/eureka  
       - EUREKA_SERVER=eureka-service
     depends_on:
       - eureka-service
@@ -75,7 +75,7 @@ services:
     links:
       - eureka-service
     environment:
-      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-service:8760/eureka  
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-service:8761/eureka  
       - EUREKA_SERVER=eureka-service
       - MYSQL_SERVER=db
     depends_on:
@@ -90,7 +90,7 @@ services:
     links:
       - eureka-service
     environment:
-      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-service:8760/eureka  
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-service:8761/eureka  
       - EUREKA_SERVER=eureka-service
       - MYSQL_SERVER=db
     depends_on:
@@ -100,4 +100,4 @@ networks:
     external: true
     driver: "bridge"    
 
-## docker container run --network interact-spring-boot-services --name eureka-service -p 8760:8760 -d eureka-service    
+## docker container run --network interact-spring-boot-services --name eureka-service -p 8761:8761 -d eureka-service    
