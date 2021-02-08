@@ -104,3 +104,12 @@ docker image build -t zuul-service --rm=true .
 5. [Get Product By Id](asset/get_product_by_id.PNG)
 6. [Collect log by ELK](asset/elk_log.PNG)
 7. [Measure request with Zipkin](asset/zipkin_log.PNG)
+
+## JMeter Performace Testing
+1. [Add Thread Group](asset/jmeter_create.PNG)
+2. [Thread Group Number of Users Login](asset/jmeter_number_user.PNG)
+3. [Http Request Body](asset/jmeter_req.PNG)
+4. [View Results Tree](asset/jmeter_result.PNG)
+5. [Duration Assertion 1000ms](asset/jmeter_duration.PNG)
+6. [Http Header](asset/jmeter_header.PNG)
+7. [Graph Results](asset/jmeter_graph.PNG)
